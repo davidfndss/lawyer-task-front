@@ -1,0 +1,210 @@
+"use client";
+
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { showError, showSuccess } from "@/app/utils/toast";
+
+const taskSchema = z.object({
+  title: z.string().min(1, "Título é obrigatório"),
+  description: z.string().min(1, "Descrição é obrigatória"),
+  status: z.enum(["todo", "doing", "done"]),
+  priority: z.enum(["low", "medium", "high"]),
+  dueDate: z.string().min(1, "Data de entrega obrigatória"),
+  clientId: z.string().min(1, "Cliente obrigatório"),
+});
+
+type TaskFormData = z.infer<typeof taskSchema>;
+
+interface Client {
+  id: string;
+  name: string;
+}
+
+export default function TaskNewPage() {
+  const [clients, setClients] = useState<Client[]>([]);
+  const [formError, setFormError] = useState<string | null>(null);
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<TaskFormData>({
+    resolver: zodResolver(taskSchema),
+    defaultValues: {
+      status: "todo",
+      priority: "low",
+    },
+  });
+
+  const status = watch("status");
+  const priority = watch("priority");
+
+  useEffect(() => {
+    const token = localStorage.getItem("atk");
+    if (!token) return router.replace("/login");
+
+    fetch("https://lawyertaskapi.vercel.app/api/clients", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then(setClients)
+      .catch(() => showError("Erro ao buscar clientes"));
+  }, [router]);
+
+  const onSubmit = async (data: TaskFormData) => {
+    const token = localStorage.getItem("atk");
+    if (!token) return;
+
+    try {
+      setFormError(null);
+      const res = await fetch("https://lawyertaskapi.vercel.app/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const result = await res.json();
+        throw new Error(result.message || "Erro ao criar tarefa");
+      }
+
+      showSuccess("Tarefa criada com sucesso!");
+      router.push("/tasks");
+    } catch (err: any) {
+      showError(err.message);
+      setFormError(err.message);
+    }
+  };
+
+  return (
+    <main className="h-full min-h-screen w-full flex flex-col items-center bg-b1 text-zinc-200 px-6 py-8">
+      <section className="flex flex-col items-center justify-center w-full max-w-[1000px]">
+        <header className="w-full flex flex-col items-start justify-center gap-1 my-4 px-6">
+          <h1 className="text-3xl font-bold">Criar Nova Tarefa</h1>
+          <p className="text-zinc-400">Preencha os campos abaixo para registrar uma nova tarefa jurídica</p>
+        </header>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full p-6 bg-b2 rounded-lg flex flex-col gap-4">
+          <div>
+            <label className="text-sm text-zinc-300">Título</label>
+            <input
+              {...register("title")}
+              placeholder="Ex: Elaborar Contrato"
+              className="w-full bg-zinc-900 text-white border border-zinc-800 rounded-md px-3 py-2 mt-1"
+            />
+            {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
+          </div>
+
+          <div>
+            <label className="text-sm text-zinc-300">Descrição</label>
+            <textarea
+              {...register("description")}
+              placeholder="Detalhe os objetivos ou pontos importantes"
+              className="w-full h-28 bg-zinc-900 text-white border border-zinc-800 rounded-md px-3 py-2 mt-1 resize-none"
+            />
+            {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm text-zinc-300 mb-1 block">Status</label>
+              <div className="flex gap-2">
+                {(["todo", "doing", "done"] as const).map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => setValue("status", s)}
+                    className={`pr-4 pl-3 py-1 rounded-full text-sm border transition flex gap-2 items-center hover:bg-c5 hover:border-c5 ${
+                      status === s
+                        ? "bg-c4 text-white border-c4"
+                        : "bg-zinc-800 text-zinc-300 border-zinc-700"
+                    }`}
+                  >
+                    <i className="bi bi-circle-fill text-zinc-50 text-[9px] mt-[2px] opacity-40"></i>
+                    <span>
+                        {s.toUpperCase()}
+                    </span>
+                  </button>
+                ))}
+              </div>
+              {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status.message}</p>}
+            </div>
+
+            <div>
+              <label className="text-sm text-zinc-300 mb-1 block">Prioridade</label>
+              <div className="flex gap-2">
+                {(["low", "medium", "high"] as const).map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setValue("priority", p)}
+                    className={`pr-4 pl-3 py-1 rounded-full text-sm border transition flex gap-2 items-center hover:bg-c5 hover:border-c5  ${
+                      priority === p
+                        ? "bg-c3 text-white border-c3"
+                        : "bg-zinc-800 text-zinc-300 border-zinc-700"
+                    }`}
+                  >
+                    <i className="bi bi-circle-fill text-zinc-50 text-[9px] mt-[2px] opacity-40"></i>
+                    <span>
+                        {p.toUpperCase()}               
+                    </span>
+                  </button>
+                ))}
+              </div>
+              {errors.priority && <p className="text-red-500 text-xs mt-1">{errors.priority.message}</p>}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm text-zinc-300">Data de entrega</label>
+              <input
+                type="date"
+                {...register("dueDate")}
+                className="w-full bg-zinc-900 text-white border border-zinc-800 rounded-md px-3 py-2 mt-1"
+              />
+              {errors.dueDate && <p className="text-red-500 text-xs mt-1">{errors.dueDate.message}</p>}
+            </div>
+
+            <div>
+              <label className="text-sm text-zinc-300">Cliente</label>
+              <select
+                {...register("clientId")}
+                className="w-full bg-zinc-900 text-white border border-zinc-800 rounded-md px-3 py-2 mt-1"
+              >
+                <option value="">Selecione</option>
+                {clients.map((client) => (
+                  <option key={client.id} value={client.id}>
+                    {client.name}
+                  </option>
+                ))}
+              </select>
+              {errors.clientId && <p className="text-red-500 text-xs mt-1">{errors.clientId.message}</p>}
+            </div>
+          </div>
+
+          {formError && <p className="text-red-500 text-sm mt-2 text-center">{formError}</p>}
+
+          <div className="w-full flex justify-end">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-c1 hover:bg-c2 text-white font-semibold py-2 px-6 rounded-md mt-4 transition lg:max-w-[300px]"
+            >
+              {isSubmitting ? "Criando..." : "Criar Tarefa"}
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+  );
+}
