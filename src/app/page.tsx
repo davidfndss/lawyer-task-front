@@ -1,4 +1,5 @@
 import RedirectButton from "../components/Button/RedirectButton";
+import { showSuccess } from "./utils/toast";
 
 export default function Home() {
   return (

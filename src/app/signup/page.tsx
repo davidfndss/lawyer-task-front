@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LiaBalanceScaleSolid } from "react-icons/lia";
 import RedirectButton from "@/components/Button/RedirectButton";
+import { showError } from "../utils/toast";
 
 const signupSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -46,6 +47,8 @@ export default function SignupPage() {
       localStorage.setItem("atk", result.atk);
       router.push("/tasks");
     } catch (err: any) {
+      showError("Houve um erro ao criar a conta");
+      console.error(err);
       setFormError(err.message);
     }
   };
@@ -70,8 +73,9 @@ export default function SignupPage() {
             <input
               id="email"
               type="email"
+              required
               {...register("email")}
-              className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
+              className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c"
             />
             {errors.email && <p className="text-red-500 text-xs mt-2">{errors.email.message}</p>}
           </div>
@@ -83,8 +87,9 @@ export default function SignupPage() {
             <input
               id="password"
               type="password"
+              required
               {...register("password")}
-              className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
+              className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c"
             />
             {errors.password && <p className="text-red-500 text-xs mt-2">{errors.password.message}</p>}
           </div>

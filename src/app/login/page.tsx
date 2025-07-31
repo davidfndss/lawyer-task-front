@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LiaBalanceScaleSolid } from "react-icons/lia";
 import RedirectButton from "@/components/Button/RedirectButton";
+import { showError } from "../utils/toast";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -26,7 +27,6 @@ export default function LoginPage() {
 
   const [formError, setFormError] = useState<string | null>(null);
   const router = useRouter();
-
   const onSubmit = async (data: LoginData) => {
     try {
       setFormError(null);
@@ -45,6 +45,8 @@ export default function LoginPage() {
       localStorage.setItem("atk", result.atk);
       router.push("/tasks");
     } catch (err: any) {
+      showError("Houve um erro ao fazer login");
+      console.error(err);
       setFormError(err.message);
     }
   };
@@ -69,6 +71,7 @@ export default function LoginPage() {
             <input
               id="email"
               type="email"
+              required
               {...register("email")}
               className="w-full px-3 py-2 rounded-lg bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
             />
@@ -83,6 +86,7 @@ export default function LoginPage() {
               id="password"
               type="password"
               {...register("password")}
+              required
               className="w-full px-3 py-2 rounded-lg bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
             />
             {errors.password && <p className="text-red-500 text-xs mt-2">{errors.password.message}</p>}
