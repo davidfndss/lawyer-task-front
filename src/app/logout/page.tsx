@@ -3,28 +3,20 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ErrorComponent from "@/components/Error/Error";
+import Error404Component from "@/components/Error/404Error";
 
 export default function LogoutPage() {
-    // const router = useRouter();
+    const router = useRouter();
 
-    // useEffect(() => {     
-    //     localStorage.removeItem("token");
+    useEffect(() => {     
+        localStorage.removeItem("atk");
 
-    //     router.replace("/login");
-    // }, []);
-
-    // return (
-    //     <main className="w-full h-screen flex items-center justify-center bg-b1 text-zinc-300">
-    //     <p>Saindo...</p>
-    //     </main>
-    // );
+        router.replace("/login");
+    }, []);
 
     return (
-        <ErrorComponent
-            errorMessage="Você não está logado."
-            button={true}
-            buttonInnerText="Entrar"
-            buttonCallback={() => window.location.href = "/login"}
-        />
-    )
+        <main className="w-full h-screen flex items-center justify-center bg-b1 text-zinc-300">
+        <p>Saindo...</p>
+        </main>
+    );
 }

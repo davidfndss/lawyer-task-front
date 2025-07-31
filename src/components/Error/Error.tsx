@@ -1,21 +1,15 @@
-"use client"; 
-
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import RedirectButton from "../Button/RedirectButton";
 
 interface ErrorProps {
     errorMessage: string;
     button?: boolean;
     buttonInnerText?: string;
-    buttonCallback?: () => void;
+    buttonRedirectRoute?: string;
 }
 
-export default function ErrorComponent({ errorMessage, button, buttonInnerText, buttonCallback }: ErrorProps){
-  const router = useRouter();
+export default function ErrorComponent({ errorMessage, button, buttonInnerText, buttonRedirectRoute }: ErrorProps){
 
-  useEffect(() => {
-    console.error("Erro detectado:", errorMessage);
-  }, [errorMessage]);
+  console.error("Erro detectado:", errorMessage);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-b1">
@@ -25,20 +19,14 @@ export default function ErrorComponent({ errorMessage, button, buttonInnerText, 
       <img src="/img/error/error.png" className="w-[300px] my-4"></img>
       
       <div className="flex gap-2">
-        <button
-            onClick={() => router.back()}
-            className="mt-6 rounded-lg text-zinc-500 px-4 py-2 transition cursor-pointer hover:bg-zinc-900"
-        >
+        <RedirectButton className="mt-6 rounded-lg text-zinc-500 px-4 py-2 transition cursor-pointer hover:bg-zinc-900">
             <i className="bi bi-chevron-left"></i> Voltar
-        </button>
+        </RedirectButton>
         {
           button ? (
-            <button
-            onClick={buttonCallback}
-              className="mt-6 rounded-lg bg-c1 px-4 py-2 text-white transition cursor-pointer hover:bg-c2"
-            >
+            <RedirectButton className="mt-6 rounded-lg bg-c1 px-6 py-2 text-white transition cursor-pointer hover:bg-c2" route={buttonRedirectRoute}>
               {buttonInnerText}
-            </button>
+            </RedirectButton>
           ) : null
         }
         

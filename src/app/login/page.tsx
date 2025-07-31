@@ -5,6 +5,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { LiaBalanceScaleSolid } from "react-icons/lia";
+import RedirectButton from "@/components/Button/RedirectButton";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -40,7 +42,7 @@ export default function LoginPage() {
         throw new Error(result?.message || "Erro ao fazer login");
       }
 
-      localStorage.setItem("token", result.atk);
+      localStorage.setItem("atk", result.atk);
       router.push("/tasks");
     } catch (err: any) {
       setFormError(err.message);
@@ -49,13 +51,17 @@ export default function LoginPage() {
 
   return (
     <main className="w-full h-full min-h-screen flex items-center justify-center bg-b1">
-      <section className="w-full max-w-[400px] py-10 px-6 rounded-xl flex flex-col items-center justify-center bg-b2 border border-zinc-900">
-        <h1 className="text-3xl font-bold text-zinc-100">Login</h1>
+      <section className="w-full max-w-[450px] py-10 px-6 rounded-xl flex flex-col items-center justify-center bg-b2 border border-zinc-900">
+        <div className="flex flex-col items-center">
+          <LiaBalanceScaleSolid className="text-c4 text-6xl mb-1" />
+          <h1 className="text-zinc-300 text-3xl font-[700] tracking-tight">LawyerTask</h1>
+        </div>
+        
         <p className="text-zinc-400 mt-2 text-sm text-center">
-          Faça login na sua conta para gerenciar suas tarefas jurídicas
+          Entre na sua conta para gerenciar suas tarefas jurídicas
         </p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full mt-6 space-y-4 flex flex-col">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full mt-6 flex flex-col">
           <div>
             <label htmlFor="email" className="text-zinc-300 text-sm block mb-1">
               Email
@@ -64,12 +70,12 @@ export default function LoginPage() {
               id="email"
               type="email"
               {...register("email")}
-              className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
+              className="w-full px-3 py-2 rounded-lg bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
             />
             {errors.email && <p className="text-red-500 text-xs mt-2">{errors.email.message}</p>}
           </div>
 
-          <div>
+          <div className="mt-4">
             <label htmlFor="password" className="text-zinc-300 text-sm block mb-1">
               Senha
             </label>
@@ -77,21 +83,28 @@ export default function LoginPage() {
               id="password"
               type="password"
               {...register("password")}
-              className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
+              className="w-full px-3 py-2 rounded-lg bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
             />
             {errors.password && <p className="text-red-500 text-xs mt-2">{errors.password.message}</p>}
           </div>
 
-          {formError && <p className="text-red-500 text-sm text-center">{formError}</p>}
+          {formError && <p className="text-red-500 text-sm text-center mt-2 -mb-2">{formError}</p>}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-c1 hover:bg-c2 text-white font-semibold py-2 rounded-md transition"
+            className="w-full bg-c1 hover:bg-c2 text-white font-semibold py-2 rounded-lg transition mt-8"
           >
             {isSubmitting ? "Entrando..." : "Entrar"}
           </button>
         </form>
+
+        <RedirectButton
+          route="/signup"
+          className="w-full hover:text-zinc-300 text-zinc-500 font-[100] text-sm py-1 rounded-lg mt-4 transition"
+        >
+          Não tem uma conta? Cadastre-se
+        </RedirectButton>
       </section>
     </main>
   );

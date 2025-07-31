@@ -2,12 +2,26 @@
 
 import { useRouter } from "next/navigation"
 
-export default function RedirectButton(props: { route: string, className?: string}): React.JSX.Element {
-    const router = useRouter()
+interface RedirectButtonProps {
+  route?: string
+  className?: string
+  children?: React.ReactNode
+}
 
-    return (
-        <button className={props.className} onClick={() => router.push(props.route)}>
-            Entrar
-        </button>
-    )
+export default function RedirectButton({ route, className, children }: RedirectButtonProps): React.JSX.Element {
+  const router = useRouter()
+
+  const handleClick = () => {
+    if (route) {
+      router.push(route)
+    } else {
+      router.back()
+    }
+  }
+
+  return (
+    <button className={className} onClick={handleClick}>
+      {children}
+    </button>
+  )
 }
