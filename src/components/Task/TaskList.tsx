@@ -51,7 +51,7 @@ export default function TasksList() {
             </div>
             <Link
               href="/tasks/new"
-              className="bg-c1 hover:bg-c2 text-white px-4 py-2 rounded-md font-semibold"
+              className="bg-c1 transition hover:bg-c2 text-white px-4 py-2 rounded-md font-semibold"
             >
               Nova Tarefa
             </Link>

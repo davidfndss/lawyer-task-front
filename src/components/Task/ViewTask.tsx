@@ -18,9 +18,9 @@ export default function ViewTask(props: ViewTaskProps) {
   const priorityClasses = getPriorityClass(props.task.priority);
   return (
     <>
-      <header className="flex items-center gap-2 mb-8">
-        <LiaBalanceScaleSolid className="text-c4 text-4xl" />
-        <h1 className="text-2xl font-bold">Tarefa</h1>
+      <header className="flex items-center gap-1 mb-8">
+        <LiaBalanceScaleSolid className="text-c4 text-5xl" />
+        <h1 className="text-3xl font-bold">Tarefa</h1>
       </header>
 
       <div className="flex flex-col">

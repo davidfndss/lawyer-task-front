@@ -15,16 +15,22 @@ export default function Navbar() {
     <nav className="w-full min-w-screen flex justify-center fixed bottom-0 items-start font-intert tracking-tight bg-b1 z-20 md:hidden">
         <div className="w-full flex items-center justify-center">
             <article className="w-full gap-2 flex justify-evenly px-10 py-1">
-
-              <nav className="text-zinc-600 font-[500] flex items-center gap-2 cursor-pointer transition py-2 px-2 hover:text-c1" onClick={() => router.push("/dashboard")}>
-                <span className="text-3xl">
-                  <IoGridOutline />
-                </span>
-              </nav>
               
               <nav className="text-zinc-600 font-[500] flex items-center gap-2 cursor-pointer transition py-2 px-2 hover:text-c1" onClick={() => router.push("/tasks")}>
                 <span className="text-3xl">
                   <GrTask />
+                </span>
+              </nav>
+
+              <nav className="text-zinc-600 font-[500] flex items-center gap-2 cursor-pointer transition py-2 px-2 hover:text-c1" onClick={() => router.push("/clients")}>
+                <span className="text-3xl">
+                  <GrGroup />
+                </span>
+              </nav>
+
+              <nav className="text-zinc-600 font-[500] flex items-center gap-2 cursor-pointer transition py-2 px-2 hover:text-c1" onClick={() => router.push("/dashboard")}>
+                <span className="text-3xl">
+                  <IoGridOutline />
                 </span>
               </nav>
 
