@@ -75,7 +75,7 @@ export default function SignupPage() {
               type="email"
               required
               {...register("email")}
-              className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c"
+              className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
             />
             {errors.email && <p className="text-red-500 text-xs mt-2">{errors.email.message}</p>}
           </div>
@@ -89,7 +89,7 @@ export default function SignupPage() {
               type="password"
               required
               {...register("password")}
-              className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c"
+              className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
             />
             {errors.password && <p className="text-red-500 text-xs mt-2">{errors.password.message}</p>}
           </div>

@@ -13,12 +13,6 @@ const clientSchema = z.object({
   email: z.string().email("E-mail inválido"),
 });
 
-interface Client {
-  id: string;
-  name: string;
-  email: string;
-}
-
 interface ClientSelectorProps {
   value: number;
   onChange: (clientId: string) => void;
