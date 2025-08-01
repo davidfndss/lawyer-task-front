@@ -7,14 +7,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { showError, showSuccess } from "@/app/utils/toast";
 import ClientSelector from "@/components/Clients/ClientsSelector";
+import OptionSelector from "@/components/Selector/OptionSelector";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Título é obrigatório"),
   description: z.string().min(1, "Descrição é obrigatória"),
   status: z.enum(["todo", "doing", "done"]),
   priority: z.enum(["low", "medium", "high"]),
-  dueDate: z.string("DueDate deve ser uma String").min(1, "Data de entrega obrigatória"),
-  clientId: z.number().min(1, "Cliente obrigatório"),
+  dueDate: z.string("Data de entrega deve ser uma String").min(1, "Data de entrega obrigatória"),
+  clientId: z.number("Selecione um cliente").min(1, "Cliente obrigatório"),
 });
 
 type TaskFormData = z.infer<typeof taskSchema>;
@@ -81,7 +82,7 @@ export default function TaskNewPage() {
   };
 
   return (
-    <main className="h-full min-h-screen w-full flex flex-col items-center bg-b1 text-zinc-200 px-6 py-8">
+    <main className="h-full min-h-screen w-full max-w-screen flex flex-col items-center bg-b1 text-zinc-200 px-6 py-8 overflow-hidden">
       <section className="flex flex-col items-center justify-center w-full max-w-[1000px]">
         <header className="w-full flex flex-col items-start justify-center gap-1 my-4 px-6">
           <h1 className="text-3xl font-bold">Criar Nova Tarefa</h1>
@@ -123,68 +124,40 @@ export default function TaskNewPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm text-zinc-300 mb-1 block">Status</label>
-              <div className="flex gap-2">
-                {(["todo", "doing", "done"] as const).map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => setValue("status", s)}
-                    className={`pr-4 pl-3 py-1 rounded-full text-sm border transition flex gap-2 items-center hover:bg-c5 hover:border-c5 ${
-                      status === s
-                        ? "bg-c4 text-white border-c4"
-                        : "bg-zinc-800 text-zinc-300 border-zinc-700"
-                    }`}
-                  >
-                    <i className="bi bi-circle-fill text-zinc-50 text-[9px] mt-[2px] opacity-40"></i>
-                    <span>{s.toUpperCase()}</span>
-                  </button>
-                ))}
-              </div>
-              {errors.status && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.status.message}
-                </p>
-              )}
-            </div>
+            <OptionSelector
+                label="Status"
+                options={["todo", "doing", "done"] as const}
+                value={status}
+                onChange={(val) => setValue("status", val)}
+                error={errors.status?.message}
+                activeClass="bg-c4 text-white border-c4"
+                inactiveClass="bg-zinc-800 text-zinc-300 border-zinc-700 opacity-30 hover:opacity-100"
+                getLabel={(val) =>
+                    val === "todo" ? "A FAZER" : val === "doing" ? "FAZENDO" : "CONCLUÍDO"
+                }
+            />
 
-            <div>
-              <label className="text-sm text-zinc-300 mb-1 block">
-                Prioridade
-              </label>
-              <div className="flex gap-2">
-                {(["low", "medium", "high"] as const).map((p) => (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => setValue("priority", p)}
-                    className={`pr-4 pl-3 py-1 rounded-full text-sm border transition flex gap-2 items-center hover:bg-c5 hover:border-c5  ${
-                      priority === p
-                        ? "bg-c3 text-white border-c3"
-                        : "bg-zinc-800 text-zinc-300 border-zinc-700"
-                    }`}
-                  >
-                    <i className="bi bi-circle-fill text-zinc-50 text-[9px] mt-[2px] opacity-40"></i>
-                    <span>{p.toUpperCase()}</span>
-                  </button>
-                ))}
-              </div>
-              {errors.priority && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.priority.message}
-                </p>
-              )}
-            </div>
+            <OptionSelector
+                label="Prioridade"
+                options={["low", "medium", "high"] as const}
+                value={priority}
+                onChange={(val) => setValue("priority", val)}
+                error={errors.priority?.message}
+                activeClass="bg-c3 text-white border-c3"
+                inactiveClass="bg-zinc-800 text-zinc-300 border-zinc-700"
+                getLabel={(val) =>
+                    val === "low" ? "BAIXA" : val === "medium" ? "MÉDIA" : "ALTA"
+                }
+            />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 items-stretch md:grid-cols-2 gap-4">
             <div>
               <label className="text-sm text-zinc-300">Data de entrega</label>
               <input
                 type="date"
                 {...register("dueDate")}
-                className="w-full bg-zinc-900 text-white border border-zinc-800 rounded-md px-3 py-2 mt-1"
+                className="w-full bg-zinc-900 h-full max-h-14 text-white border border-zinc-800 rounded-md px-3 py-2 mt-1"
               />
               {errors.dueDate && (
                 <p className="text-red-500 text-xs mt-1">
@@ -198,7 +171,7 @@ export default function TaskNewPage() {
               <Controller
                 name="clientId"
                 control={control}
-                rules={{ required: "Cliente obrigatório" }}
+                rules={{ required: "Selecione um cliente" }}
                 render={({ field }) => (
                   <ClientSelector
                     value={field.value}
@@ -207,11 +180,6 @@ export default function TaskNewPage() {
                   />
                 )}
               />
-              {errors.clientId && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.clientId.message}
-                </p>
-              )}
             </div>
           </div>
 

@@ -4,18 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LiaBalanceScaleSolid } from "react-icons/lia";
 import Link from "next/link";
-
-interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: "todo" | "doing" | "done";
-  priority: "low" | "medium" | "high";
-  dueDate: string;
-  clientId: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import Task from "../interfaces/Task";
+import TaskCard from "@/components/Task/TaskCard";
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -49,46 +39,46 @@ export default function TasksPage() {
   }, [router]);
 
   return (
-    <main className="min-h-screen w-full bg-b1 text-zinc-200 px-6 py-8">
-      <header className="flex justify-between items-center mb-6">
-        <div className="flex items-center gap-3">
-          <LiaBalanceScaleSolid className="text-c4 text-4xl" />
-          <h1 className="text-2xl font-bold">Minhas Tarefas</h1>
-        </div>
-        <Link
-          href="/tasks/new"
-          className="bg-c1 hover:bg-c2 text-white px-4 py-2 rounded-md font-semibold"
-        >
-          Nova Tarefa
-        </Link>
-      </header>
+    // <main className="h-full min-h-screen w-full flex flex-col items-center bg-b1 text-zinc-200 px-6 py-8">
+    //   <section className="flex flex-col items-center justify-center w-full max-w-[1000px]">
+    //     <header className="w-full flex flex-col items-start justify-center gap-1 my-4 px-6">
+    //       <h1 className="text-3xl font-bold">Criar Nova Tarefa</h1>
+    //       <p className="text-zinc-400">
+    //         Preencha os campos abaixo para registrar uma nova tarefa jurídica
+    //       </p>
+    //     </header>
 
-      {loading && <p className="text-zinc-400">Carregando tarefas...</p>}
-      {error && <p className="text-red-400">{error}</p>}
+    //     <form
+    //       className="w-full p-6 bg-b2 rounded-lg flex flex-col gap-4"
+    //     ></form>
 
-      {!loading && !error && tasks.length === 0 && (
-        <p className="text-zinc-500">Nenhuma tarefa encontrada.</p>
-      )}
-
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {tasks.map((task) => (
+    <main className="h-full min-h-screen w-full max-w-screen flex justify-center overflow-hidden bg-b1 text-zinc-200 px-6 py-8">
+      <section className="flex flex-col items-center w-full max-w-[1000px]">
+        <header className="w-full flex justify-between items-center mb-6">
+          <div className="flex items-center justify-center gap-2">
+            <LiaBalanceScaleSolid className="text-c4 text-5xl" />
+            <h1 className="text-2xl font-bold">Minhas Tarefas</h1>
+          </div>
           <Link
-            href={`/tasks/${task.id}`}
-            key={task.id}
-            className="bg-b2 border border-zinc-800 p-4 rounded-lg hover:border-c1 transition cursor-pointer"
+            href="/tasks/new"
+            className="bg-c1 hover:bg-c2 text-white px-4 py-2 rounded-md font-semibold"
           >
-            <h2 className="text-lg font-semibold text-zinc-100 mb-1">
-              {task.title}
-            </h2>
-            <p className="text-sm text-zinc-400 line-clamp-2 mb-2">
-              {task.description}
-            </p>
-            <div className="flex justify-between text-xs text-zinc-500">
-              <span className="capitalize">Status: {task.status}</span>
-              <span className="capitalize">Prioridade: {task.priority}</span>
-            </div>
+            Nova Tarefa
           </Link>
-        ))}
+        </header>
+
+        {loading && <p className="text-zinc-400">Carregando tarefas...</p>}
+        {error && <p className="text-red-400">{error}</p>}
+
+        {!loading && !error && tasks.length === 0 && (
+          <p className="text-zinc-500">Nenhuma tarefa encontrada.</p>
+        )}
+
+        <article className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {tasks.map((task) => (
+            <TaskCard key={task.id} task={task} />
+          ))}
+        </article>
       </section>
     </main>
   );

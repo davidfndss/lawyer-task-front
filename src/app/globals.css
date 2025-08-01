@@ -23,3 +23,22 @@ body {
 .transition{
   transition: ease 0.3s;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #662852; 
+  border-radius: 9999px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #662852 transparent;
+}

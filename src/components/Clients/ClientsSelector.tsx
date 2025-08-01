@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { HiChevronUpDown } from "react-icons/hi2";
 import { FiSearch } from "react-icons/fi";
 import { z } from "zod";
+import truncateStringWithEllipsis from "@/app/utils/truncateStringWithElipsis";
 
 const clientSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
@@ -116,14 +117,14 @@ export default function ClientSelector({ value, onChange, error }: ClientSelecto
   };
 
   return (
-    <div className="relative">
+    <div className="relative h-full max-h-14">
       <button
         type="button"
         onClick={() => setIsModalOpen(true)}
-        className="w-full bg-zinc-900 text-white border flex justify-between items-center border-zinc-800 rounded-md px-3 py-2 text-left"
+        className="w-full bg-zinc-900 h-full max-h-14 text-white flex justify-between items-center border border-zinc-800 rounded-md px-3 py-2 mt-1 text-left"
       >
         <span>
-          {clients.find((c) => c.id === String(value))?.name || "Selecionar cliente"}
+          {truncateStringWithEllipsis(clients.find((c) => c.id == value)?.name || "Selecionar cliente", 60)}
         </span>
         <div className="text-2xl">
           <HiChevronUpDown className="inline text-zinc-400" />
@@ -204,7 +205,7 @@ export default function ClientSelector({ value, onChange, error }: ClientSelecto
                       }}
                       className="w-full text-left px-3 py-2 bg-zinc-800 hover:bg-c5 text-white rounded-md transition"
                     >
-                      {client.name}
+                      {truncateStringWithEllipsis(client.name, 60)}
                     </button>
                   ))}
                 </div>
