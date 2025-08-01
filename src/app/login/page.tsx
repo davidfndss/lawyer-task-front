@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { LiaBalanceScaleSolid } from "react-icons/lia";
 import RedirectButton from "@/components/Button/RedirectButton";
 import { showError } from "../utils/toast";
+import MockSignupButton from "@/components/Button/MockSignupButton";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -36,6 +37,14 @@ export default function LoginPage() {
         body: JSON.stringify(data),
       });
 
+      if (res.status === 401) {
+        throw new Error("Email ou senha incorretos");
+      }
+
+      if (res.status === 404) {
+        throw new Error("Email ou senha incorretos");
+      }
+
       const result = await res.json();
 
       if (!res.ok) {
@@ -45,6 +54,8 @@ export default function LoginPage() {
       localStorage.setItem("atk", result.atk);
       router.push("/tasks");
     } catch (err: any) {
+
+
       showError("Houve um erro ao fazer login");
       console.error(err);
       setFormError(err.message);
@@ -110,6 +121,7 @@ export default function LoginPage() {
           Não tem uma conta? Cadastre-se
         </RedirectButton>
       </section>
+      <MockSignupButton />
     </main>
   );
 }

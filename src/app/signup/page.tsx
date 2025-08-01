@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { LiaBalanceScaleSolid } from "react-icons/lia";
 import RedirectButton from "@/components/Button/RedirectButton";
 import { showError } from "../utils/toast";
+import MockSignupButton from "@/components/Button/MockSignupButton";
 
 const signupSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -37,6 +38,14 @@ export default function SignupPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+
+      if (res.status === 409) {
+        throw new Error("Não foi possível criar a conta. Tente novamente");
+      }
+
+      if (res.status === 500) {
+        throw new Error("Erro ao criar a conta. Tente novamente");
+      }
 
       const result = await res.json();
 
@@ -112,6 +121,7 @@ export default function SignupPage() {
           Já tem uma conta? Faça Login
         </RedirectButton>
       </section>
+      <MockSignupButton />
     </main>
   );
 }

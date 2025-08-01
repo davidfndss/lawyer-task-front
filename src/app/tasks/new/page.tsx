@@ -9,6 +9,7 @@ import { showError, showSuccess } from "@/app/utils/toast";
 import ClientSelector from "@/components/Clients/ClientsSelector";
 import OptionSelector from "@/components/Selector/OptionSelector";
 import { Aside } from "@/components/Aside/Aside";
+import { Loading } from "@/components/Loading/Loading";
 
 const taskSchema = z.object({
   title: z.string().min(1, "Título é obrigatório"),
@@ -91,7 +92,7 @@ export default function TaskNewPage() {
       <section className="h-full min-h-screen w-full max-w-screen flex flex-col items-center bg-b1 text-zinc-200 px-6 py-8 overflow-hidden">
         <article className="flex flex-col items-center justify-center w-full max-w-[1000px]">
           <header className="w-full flex flex-col items-start justify-center gap-1 my-4 px-6">
-            <h1 className="text-3xl font-bold">Criar Nova Tarefa</h1>
+            <h1 className="text-3xl font-bold">Nova Tarefa</h1>
             <p className="text-zinc-400">
               Preencha os campos abaixo para registrar uma nova tarefa jurídica
             </p>
@@ -205,7 +206,7 @@ export default function TaskNewPage() {
                 disabled={isSubmitting}
                 className="w-full bg-c1 hover:bg-c2 text-white font-semibold py-2 px-6 rounded-md mt-4 transition lg:max-w-[300px]"
               >
-                {isSubmitting ? "Criando..." : "Criar Tarefa"}
+                {isSubmitting ? <Loading /> : "Adicionar"}
               </button>
             </div>
           </form>

@@ -62,7 +62,10 @@ export default function TasksPage() {
           {error && <p className="text-red-400">{error}</p>}
 
           {!loading && !error && tasks.length === 0 && (
-            <p className="text-zinc-500">Nenhuma tarefa encontrada.</p>
+            <div className="flex flex-col">
+              <p className="text-zinc-500">Seja bem-vindo ao <span className="font-bold text-c2">LawyerTask</span></p>
+              <p className="text-zinc-500">Adicione uma nova tarefa para começar</p>
+            </div>
           )}
 
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">

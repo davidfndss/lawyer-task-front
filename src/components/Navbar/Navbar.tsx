@@ -16,7 +16,7 @@ export default function Navbar() {
         <div className="w-full flex items-center justify-center">
             <article className="w-full gap-2 flex justify-evenly px-10 py-1">
 
-              <nav className="text-zinc-400 font-[500] flex items-center gap-2 cursor-pointer transition py-2 px-2 hover:text-c1" onClick={() => router.push("/dshboard")}>
+              <nav className="text-zinc-400 font-[500] flex items-center gap-2 cursor-pointer transition py-2 px-2 hover:text-c1" onClick={() => router.push("/dashboard")}>
                 <span className="text-3xl">
                   <IoGridOutline />
                 </span>

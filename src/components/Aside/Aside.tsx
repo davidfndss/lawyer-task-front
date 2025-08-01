@@ -15,8 +15,8 @@ function Aside() {
   return (
     <aside className="w-[40vw] max-w-[400px] min-h-[100vh] justify-center items-start pt-10 font-intert tracking-tight z-20 hidden md:flex bg-b1">
         <div className="w-full flex flex-col items-center">
-            <button className="flex items-center cursor-pointer transition z-10 hover:opacity-70" onClick={() => router.push("/painel")}>
-                <h1 className="w-[100px] mt-2 md:mt-0">LawerTask</h1>
+            <button className="flex items-center cursor-pointer transition z-10 hover:opacity-70" onClick={() => router.push("/")}>
+                <h1 className="w-[100px] mt-2 md:mt-0">LawyerTask</h1>
             </button>
             <div className="w-full flex justify-end -mt-[33px]">
                 <button className="flex items-center cursor-pointer text-zinc-900 z-10" onClick={() => router.back()}>
