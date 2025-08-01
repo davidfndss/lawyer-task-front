@@ -2,21 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { LiaBalanceScaleSolid } from "react-icons/lia";
 import { Aside } from "@/components/Aside/Aside";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { showError, showSuccess } from "@/app/utils/toast";
-import ClientSelector from "@/components/Clients/ClientsSelector";
-import OptionSelector from "@/components/Selector/OptionSelector";
-import { FaRegEdit, FaUserCircle } from "react-icons/fa";
-import { MdOutlineMail } from "react-icons/md";
-import { formatToDayMonth } from "@/app/utils/formatDate";
+import { showError, showSuccess } from "@/app/utils/toast";;
 import Error404Component from "@/components/Error/404Error";
 import Task from "@/app/interfaces/Task";
 import ViewTask from "@/components/Task/ViewTask";
-import { BiTrash } from "react-icons/bi";
 import { BsFillTrashFill } from "react-icons/bs";
 import { Loading } from "@/components/Loading/Loading";
 import Navbar from "@/components/Navbar/Navbar";

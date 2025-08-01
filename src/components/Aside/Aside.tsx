@@ -54,7 +54,7 @@ function Aside() {
                   <GrGroup />
                 </span>
             
-                <nav>Usuários</nav>
+                <nav>Clientes</nav>
               </nav>
 
               <nav className="text-zinc-500 font-[500] flex items-center gap-2 cursor-pointer transition py-1 px-2 -sm hover:text-c4 hover:bg-b2" onClick={() => router.push("/logout")}>

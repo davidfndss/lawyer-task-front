@@ -115,7 +115,7 @@ export default function ClientSelector({ value, onChange, error }: ClientSelecto
       <button
         type="button"
         onClick={() => setIsModalOpen(true)}
-        className="w-full bg-zinc-900 h-full max-h-14 text-white flex justify-between items-center border border-zinc-800 rounded-md px-3 py-2 mt-1 text-left"
+        className="w-full bg-zinc-900 h-full max-h-12 text-white flex justify-between items-center border border-zinc-800 rounded-md px-3 py-2 text-left"
       >
         <span>
           {truncateStringWithEllipsis(clients.find((c) => c.id == value)?.name || "Selecionar cliente", 60)}
