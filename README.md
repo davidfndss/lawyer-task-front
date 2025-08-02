@@ -1,4 +1,4 @@
-# LawerTask - Gerencie suas tarefas jurídicas
+# LawyerTask - Gerencie suas tarefas jurídicas
 
 <br>
 
@@ -8,7 +8,7 @@
 
 <br>
 
-Este documento guia o setup local do projeto **LawerTask Web** com NestJS, Prisma ORM, Next.js e Supabase.
+Este documento guia o setup local do projeto **LawyerTask Web** com NestJS, Prisma ORM, Next.js e Supabase.
 
 <br>
 
