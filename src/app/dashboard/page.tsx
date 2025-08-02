@@ -10,6 +10,7 @@ import { UrgentTasksSection } from "@/components/Dashboard/UrgentTaskSection";
 import StatCard from "@/components/Dashboard/StatCard";
 import { TopClientsSection } from "@/components/Dashboard/TopClientsSection";
 import { UpcomingDueTasksSection } from "@/components/Dashboard/UpcomingDueTasksSelection";
+import { showError } from "../utils/toast";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -32,8 +33,15 @@ export default function Dashboard() {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || "Erro ao buscar tarefas");
         setTasks(data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          showError("Houve um erro");
+          console.error(err.message);
+          setError(err.message)
+        } else {
+          console.error(err);
+          showError("Houve um erro inesperado");
+        }
       } finally {
         setLoading(false);
       }

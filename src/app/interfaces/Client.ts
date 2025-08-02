@@ -1,4 +1,4 @@
-interface Client {
+export default interface Client {
   id: string;
   name: string;
   email: string;

@@ -82,8 +82,8 @@ export default function TaskForm() {
           setValue("priority", taskData.priority);
           setValue("dueDate", taskData.dueDate.slice(0, 10));
           setValue("clientId", taskData.clientId);
-        } catch (err: any) {
-          setError(err.message === "not-found" ? "not-found" : "Erro ao carregar tarefa");
+        } catch (err: unknown) {
+          setError(err instanceof Error && err.message === "not-found" ? "not-found" : "Erro ao carregar tarefa");
         } finally {
           setLoading(false);
         }
@@ -118,9 +118,9 @@ export default function TaskForm() {
 
       showSuccess(isEditMode ? "Tarefa atualizada com sucesso!" : "Tarefa criada com sucesso!");
       router.push("/tasks");
-    } catch (err: any) {
-      showError(err.message);
-      setFormError(err.message);
+    } catch (err: unknown) {
+      showError(err instanceof Error && err.message || "Houve um erro ao salvar a tarefa");
+      setFormError(err instanceof Error && err.message || "Houve um erro ao salvar a tarefa");
     }
   };
 

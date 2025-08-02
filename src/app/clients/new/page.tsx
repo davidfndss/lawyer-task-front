@@ -9,13 +9,9 @@ import { showError, showSuccess } from "@/app/utils/toast";
 import { Aside } from "@/components/Aside/Aside";
 import { Loading } from "@/components/Loading/Loading";
 import Navbar from "@/components/Navbar/Navbar";
+import { ClientSchema } from "@/app/schemas/ClientSchema";
 
-export const clientSchema = z.object({
-  name: z.string().min(1, "Nome é obrigatório"),
-  email: z.string().email("E-mail inválido"),
-});
-
-type ClientFormData = z.infer<typeof clientSchema>;
+type ClientFormData = z.infer<typeof ClientSchema>;
 
 export default function CreateClientForm() {
   const router = useRouter();
@@ -27,12 +23,12 @@ export default function CreateClientForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ClientFormData>({
-    resolver: zodResolver(clientSchema),
+    resolver: zodResolver(ClientSchema),
   });
 
   useEffect(() => {
     const token = localStorage.getItem("atk");
-    if (!token) return router.replace("/login");
+    if (!token) router.replace("/login");
   }, []);
 
   const onSubmit = async (data: ClientFormData) => {
@@ -58,9 +54,14 @@ export default function CreateClientForm() {
 
       showSuccess("Cliente criado com sucesso!");
       router.push("/clients");
-    } catch (err: any) {
-      showError(err.message);
-      setFormError(err.message);
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+        showError("Houve um erro ao adicionar o cliente");
+        console.error(err.message);
+      } else {
+        console.error(err)
+        showError("Houve um erro inesperado");
+      }
     }
   };
 

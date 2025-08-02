@@ -55,10 +55,14 @@ export default function SignupPage() {
 
       localStorage.setItem("atk", result.atk);
       router.push("/tasks");
-    } catch (err: any) {
-      showError("Houve um erro ao criar a conta");
-      console.error(err);
-      setFormError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        showError("Houve um erro");
+        console.error(err.message);
+      } else {
+        console.error(err)
+        showError("Houve um erro inesperado");
+      }
     }
   };
 
@@ -67,14 +71,19 @@ export default function SignupPage() {
       <section className="w-full max-w-[450px] py-10 px-6 rounded-xl flex flex-col items-center justify-center bg-b2 border border-zinc-900">
         <div className="flex flex-col items-center">
           <LiaBalanceScaleSolid className="text-c1 text-6xl mb-1" />
-          <h1 className="text-zinc-300 text-2xl font-[700] tracking-tight">Seja bem vindo ao LawyerTask</h1>
+          <h1 className="text-zinc-300 text-2xl font-[700] tracking-tight">
+            Seja bem vindo ao LawyerTask
+          </h1>
         </div>
 
         <p className="text-zinc-400 mt-2 text-sm text-center">
           Cadastre-se para organizar suas tarefas jurídicas
         </p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full mt-6 flex flex-col">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full mt-6 flex flex-col"
+        >
           <div>
             <label htmlFor="email" className="text-zinc-300 text-sm block mb-1">
               Email
@@ -86,11 +95,18 @@ export default function SignupPage() {
               {...register("email")}
               className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
             />
-            {errors.email && <p className="text-red-500 text-xs mt-2">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div className="mt-4">
-            <label htmlFor="password" className="text-zinc-300 text-sm block mb-1">
+            <label
+              htmlFor="password"
+              className="text-zinc-300 text-sm block mb-1"
+            >
               Senha
             </label>
             <input
@@ -100,10 +116,18 @@ export default function SignupPage() {
               {...register("password")}
               className="w-full px-3 py-2 rounded-md bg-zinc-900 text-zinc-100 border border-zinc-800 transition focus:outline-none focus:ring-2 focus:ring-c1"
             />
-            {errors.password && <p className="text-red-500 text-xs mt-2">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-2">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
-          {formError && <p className="text-red-500 text-sm text-center mt-2 -mb-2">{formError}</p>}
+          {formError && (
+            <p className="text-red-500 text-sm text-center mt-2 -mb-2">
+              {formError}
+            </p>
+          )}
 
           <button
             type="submit"

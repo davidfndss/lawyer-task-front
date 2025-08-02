@@ -1,8 +1,6 @@
 "use client"
 import React from "react"
 import { useRouter } from "next/navigation"
-import { AiOutlineDollar } from "react-icons/ai"
-import { MdOutlineEventNote } from "react-icons/md"
 import { IoGridOutline } from "react-icons/io5"
 import { GrGroup, GrTask } from "react-icons/gr"
 import { TbLogout } from "react-icons/tb"

@@ -1,9 +1,5 @@
 import RedirectButton from "../components/Button/RedirectButton";
 
-interface ErrorProps {
-  errorMessage?: string;
-}
-
 export default function Error404Component() {
 
   return (

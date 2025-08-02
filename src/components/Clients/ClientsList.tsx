@@ -6,11 +6,13 @@ import { LiaBalanceScaleSolid } from "react-icons/lia";
 import Link from "next/link";
 import { Aside } from "@/components/Aside/Aside";
 import ClientCard from "./ClientCard";
+import { showError } from "@/app/utils/toast";
+import { Loading } from "../Loading/Loading";
+import Client from "@/app/interfaces/Client";
 
 export default function ClientsList() {
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const handleDelete = (id: string) => {
@@ -39,8 +41,8 @@ export default function ClientsList() {
         if (!res.ok) throw new Error(data.message || "Erro ao buscar clientes");
 
         setClients(data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        showError(err instanceof Error && err.message || "Houve um erro ao buscar clientes");
       } finally {
         setLoading(false);
       }
@@ -48,6 +50,14 @@ export default function ClientsList() {
 
     fetchClients();
   }, [router]);
+
+  if (loading) {
+    return (
+      <div className="flex h-full min-h-screen justify-center items-center w-full bg-b1">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <main className="flex">
@@ -67,10 +77,7 @@ export default function ClientsList() {
             </Link>
           </header>
 
-          {loading && <p className="text-zinc-400">Carregando clientes...</p>}
-          {error && <p className="text-red-400">{error}</p>}
-
-          {!loading && !error && clients.length === 0 && (
+          {!loading && clients.length === 0 && (
             <div className="flex flex-col">
               <p className="text-zinc-500">Nenhum cliente encontrado.</p>
               <p className="text-zinc-500">

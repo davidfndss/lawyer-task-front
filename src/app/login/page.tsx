@@ -53,12 +53,12 @@ export default function LoginPage() {
 
       localStorage.setItem("atk", result.atk);
       router.push("/tasks");
-    } catch (err: any) {
-
-
+    } catch (err: unknown) {
       showError("Houve um erro ao fazer login");
       console.error(err);
-      setFormError(err.message);
+      if (err instanceof Error) {
+        setFormError(err.message)
+      }
     }
   };
 

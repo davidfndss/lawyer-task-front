@@ -2,8 +2,6 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import ErrorComponent from "@/components/Error/Error";
-import Error404Component from "@/components/Error/404Error";
 
 export default function LogoutPage() {
     const router = useRouter();

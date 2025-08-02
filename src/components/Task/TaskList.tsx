@@ -8,11 +8,12 @@ import Task from "@/app/interfaces/Task";
 import TaskCard from "@/components/Task/TaskCard";
 import { Aside } from "@/components/Aside/Aside";
 import { Loading } from "../Loading/Loading";
+import { showError } from "@/app/utils/toast";
 
 export default function TasksList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -30,8 +31,8 @@ export default function TasksList() {
 
         if (!res.ok) throw new Error(data.message || "Erro ao buscar tarefas");
         setTasks(data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        showError(err instanceof Error && err.message || "Houve um erro ao buscar tarefas");
       } finally {
         setLoading(false);
       }
@@ -66,9 +67,7 @@ export default function TasksList() {
             </Link>
           </header>
 
-          {error && <p className="text-red-400">{error}</p>}
-
-          {!loading && !error && tasks.length === 0 && (
+          {!loading && tasks.length === 0 && (
             <div className="flex flex-col">
               <p className="text-zinc-500">Seja bem-vindo ao <span className="font-bold text-c2">LawyerTask</span></p>
               <p className="text-zinc-500">Adicione uma nova tarefa para começar</p>

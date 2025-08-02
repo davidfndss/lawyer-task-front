@@ -6,10 +6,11 @@ import { Aside } from "@/components/Aside/Aside";
 import { showError, showSuccess } from "@/app/utils/toast";;
 import Error404Component from "@/components/Error/404Error";
 import Task from "@/app/interfaces/Task";
-import ViewTask from "@/components/Task/ViewTask";
+import TaskView from "@/components/Task/TaskView";
 import { BsFillTrashFill } from "react-icons/bs";
 import { Loading } from "@/components/Loading/Loading";
 import Navbar from "@/components/Navbar/Navbar";
+import Client from "@/app/interfaces/Client";
 
 export default function TaskViewPage() {
   const { id } = useParams();
@@ -45,9 +46,9 @@ export default function TaskViewPage() {
       if (!clientRes.ok) throw new Error("not-found");
       const clientData = await clientRes.json();
       setClient(clientData);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      if (err.message === "not-found") {
+      if (err instanceof Error && err.message === "not-found") {
         setError("not-found");
       } else {
         setError("Erro ao carregar dados");
@@ -100,7 +101,7 @@ export default function TaskViewPage() {
       <Aside />
       <section className="min-h-screen w-full bg-b1 text-zinc-200 px-6 py-8 flex justify-center">
         <article className="w-full max-w-[700px]">
-          {task && client && <ViewTask task={task} client={client} />}
+          {task && client && <TaskView task={task} client={client} />}
           <div className="flex justify-between gap-4 mt-4">
           <button
             type="button"

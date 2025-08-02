@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { HiChevronUpDown } from "react-icons/hi2";
 import { FiSearch } from "react-icons/fi";
 import truncateStringWithEllipsis from "@/app/utils/truncateStringWithElipsis";
-import { clientSchema } from "@/app/clients/new/page";
+import Client from "@/app/interfaces/Client";
+import { ClientSchema } from "@/app/schemas/ClientSchema";
 
 interface ClientSelectorProps {
   value: number;
@@ -66,7 +67,7 @@ export default function ClientSelector({ value, onChange, error }: ClientSelecto
   };
 
   const handleCreateClient = async () => {
-    const result = clientSchema.safeParse({
+    const result = ClientSchema.safeParse({
       name: newClientName,
       email: newClientEmail,
     });
@@ -98,8 +99,8 @@ export default function ClientSelector({ value, onChange, error }: ClientSelecto
       setIsModalOpen(false);
       setClients((prev) => [...prev, newClient]);
       onChange(newClient.id);
-    } catch (err: any) {
-      showError(err.message || "Houve um erro ao adicionar cliente");
+    } catch (err: unknown) {
+      showError(err instanceof Error && err.message || "Houve um erro ao adicionar cliente");
     } finally {
       setLoading(false);
     }
@@ -113,7 +114,7 @@ export default function ClientSelector({ value, onChange, error }: ClientSelecto
         className="w-full bg-zinc-900 h-full max-h-12 text-white flex justify-between items-center border border-zinc-800 rounded-md px-3 py-2 text-left"
       >
         <span>
-          {truncateStringWithEllipsis(clients.find((c) => c.id == value)?.name || "Selecionar cliente", 60)}
+          {truncateStringWithEllipsis(clients.find((c) => Number(c.id) == value)?.name || "Selecionar cliente", 60)}
         </span>
         <div className="text-2xl">
           <HiChevronUpDown className="inline text-zinc-400" />

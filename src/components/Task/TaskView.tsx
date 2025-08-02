@@ -6,13 +6,14 @@ import { formatToDayMonthYear } from "@/app/utils/formatDate";
 import Task from "@/app/interfaces/Task";
 import { BiCalendar } from "react-icons/bi";
 import truncateStringWithEllipsis from "@/app/utils/truncateStringWithElipsis";
+import Client from "@/app/interfaces/Client";
 
 type ViewTaskProps = {
     task: Task;
     client: Client
 }
 
-export default function ViewTask(props: ViewTaskProps) {
+export default function TaskView(props: ViewTaskProps) {
 
   const statusClasses = getStatusClass(props.task.status);
   const priorityClasses = getPriorityClass(props.task.priority);

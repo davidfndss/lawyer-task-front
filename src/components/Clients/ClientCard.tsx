@@ -1,13 +1,12 @@
 "use client";
 
 import truncateStringWithEllipsis from "@/app/utils/truncateStringWithElipsis";
-import Link from "next/link";
-import { BsFillTrashFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import { showError, showSuccess } from "@/app/utils/toast";
 import { useRouter } from "next/navigation";
 import { formatToDayMonthYear } from "@/app/utils/formatDate";
+import Client from "@/app/interfaces/Client";
 
 interface Props extends Client {
   onDelete?: (id: string) => void;
@@ -36,8 +35,8 @@ export default function ClientCard(props: Props) {
 
       if (props.onDelete) props.onDelete(props.id); 
       else router.refresh(); 
-    } catch (err: any) {
-      showError(err.message || "Erro desconhecido ao excluir cliente");
+    } catch (err: unknown) {
+      showError(err instanceof Error && err.message || "Erro desconhecido ao excluir cliente");
     }
   };
 
