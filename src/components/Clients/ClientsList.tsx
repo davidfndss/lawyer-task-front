@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { LiaBalanceScaleSolid } from "react-icons/lia";
 import Link from "next/link";
 import { Aside } from "@/components/Aside/Aside";
 import ClientCard from "./ClientCard";
 import { showError } from "@/app/utils/toast";
 import { Loading } from "../Loading/Loading";
 import Client from "@/app/interfaces/Client";
+import { GrGroup } from "react-icons/gr";
 
 export default function ClientsList() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -66,7 +66,7 @@ export default function ClientsList() {
         <article className="flex flex-col items-center w-full max-w-[1000px]">
           <header className="w-full flex justify-between items-center mb-6">
             <div className="flex items-center justify-center gap-2">
-              <LiaBalanceScaleSolid className="text-c1 text-5xl" />
+              <GrGroup className="text-c1 text-4xl mb-1" />
               <h1 className="text-2xl font-bold">Clientes</h1>
             </div>
             <Link

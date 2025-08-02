@@ -68,7 +68,7 @@ export default function Dashboard() {
         <article className="flex flex-col items-center w-full max-w-[1000px]">
           <header className="w-full flex justify-between items-center mb-6">
             <div className="flex items-center gap-2">
-              <LiaChartBarSolid className="text-c4 text-5xl" />
+              <LiaChartBarSolid className="text-c4 text-3xl mb-1" />
               <h1 className="text-2xl font-bold">Dashboard</h1>
             </div>
           </header>
