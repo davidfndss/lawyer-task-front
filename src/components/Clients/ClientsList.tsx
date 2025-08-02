@@ -9,6 +9,7 @@ import { showError } from "@/app/utils/toast";
 import { Loading } from "../Loading/Loading";
 import Client from "@/app/interfaces/Client";
 import { GrGroup } from "react-icons/gr";
+import Navbar from "../Navbar/Navbar";
 
 export default function ClientsList() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -62,9 +63,9 @@ export default function ClientsList() {
   return (
     <main className="flex">
       <Aside />
-      <section className="h-full min-h-screen w-full max-w-screen flex justify-center overflow-hidden bg-b1 text-zinc-200 px-6 py-8">
+      <section className="h-full min-h-screen w-full max-w-screen flex justify-center overflow-hidden bg-b1 text-zinc-200 px-6 pt-8 pb-20">
         <article className="flex flex-col items-center w-full max-w-[1000px]">
-          <header className="w-full flex justify-between items-center mb-6">
+          <header className="w-full max-w-[90vw] flex justify-between items-center mb-6 lg:w-full">
             <div className="flex items-center justify-center gap-2">
               <GrGroup className="text-c1 text-4xl mb-1" />
               <h1 className="text-2xl font-bold">Clientes</h1>
@@ -86,13 +87,14 @@ export default function ClientsList() {
             </div>
           )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 w-full max-w-[90vw] lg:max-w-full">
             {clients.map((client) => (
               <ClientCard key={client.id} {...client} onDelete={handleDelete} />
             ))}
           </div>
         </article>
       </section>
+      <Navbar />
     </main>
   );
 }

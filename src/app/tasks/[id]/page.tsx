@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Aside } from "@/components/Aside/Aside";
-import { showError, showSuccess } from "@/app/utils/toast";;
+import { showError, showSuccess } from "@/app/utils/toast";
 import Error404Component from "@/components/Error/404Error";
 import Task from "@/app/interfaces/Task";
 import TaskView from "@/components/Task/TaskView";
@@ -102,24 +102,25 @@ export default function TaskViewPage() {
       <section className="min-h-screen w-full bg-b1 text-zinc-200 px-6 py-8 flex justify-center">
         <article className="w-full max-w-[700px]">
           {task && client && <TaskView task={task} client={client} />}
-          <div className="flex justify-between gap-4 mt-4">
-          <button
-            type="button"
-            onClick={deleteTask}
-            className="bg-c3 hover:bg-red-700 text-white py-2 px-4 rounded-md font-semibold transition flex gap-1 items-center"
-          >
-            <BsFillTrashFill className="text-lg" />
-            <span>Excluir Tarefa</span>
-          </button>
 
-          <button
-            type="button"
-            onClick={() => router.push(`/tasks/${id}/edit`)}
-            className="bg-c1 hover:bg-c2 text-white py-2 px-4 rounded-md  transition font-semibold"
-          >
-            Editar Tarefa
-          </button>
-        </div>
+          <div className="flex justify-between gap-4 mt-4 w-full max-w-[90vw] lg:w-full">
+            <button
+              type="button"
+              onClick={deleteTask}
+              className="bg-c3 hover:bg-red-700 text-white py-2 px-4 rounded-md font-semibold transition flex gap-1 items-center"
+            >
+              <BsFillTrashFill className="text-lg" />
+              <span>Excluir Tarefa</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => router.push(`/tasks/${id}/edit`)}
+              className="bg-c1 hover:bg-c2 text-white py-2 px-4 rounded-md  transition font-semibold"
+            >
+              Editar Tarefa
+            </button>
+          </div>
         </article>
       </section>
       <Navbar />

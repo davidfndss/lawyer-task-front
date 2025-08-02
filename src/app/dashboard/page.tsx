@@ -11,6 +11,7 @@ import StatCard from "@/components/Dashboard/StatCard";
 import { TopClientsSection } from "@/components/Dashboard/TopClientsSection";
 import { UpcomingDueTasksSection } from "@/components/Dashboard/UpcomingDueTasksSelection";
 import { showError } from "../utils/toast";
+import Navbar from "@/components/Navbar/Navbar";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -65,8 +66,8 @@ export default function Dashboard() {
     <main className="flex">
       <Aside />
       <section className="h-full min-h-screen w-full max-w-screen bg-b1 text-zinc-200 px-6 py-8 flex justify-center">
-        <article className="flex flex-col items-center w-full max-w-[1000px]">
-          <header className="w-full flex justify-between items-center mb-6">
+        <article className="flex flex-col items-center w-full max-w-[90vw] lg:max-w-[1000px]">
+          <header className="w-full max-w-[90vw] flex justify-between items-center mb-6 lg:w-full">
             <div className="flex items-center gap-2">
               <LiaChartBarSolid className="text-c4 text-3xl mb-1" />
               <h1 className="text-2xl font-bold">Dashboard</h1>
@@ -75,7 +76,7 @@ export default function Dashboard() {
 
           {error && <p className="text-red-400">{error}</p>}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full mb-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-[90vw] mb-10 lg:w-full">
             <StatCard
               title="Total de Tarefas"
               count={tasks.length}
@@ -105,6 +106,7 @@ export default function Dashboard() {
           <UpcomingDueTasksSection tasks={tasks} limit={3} />
         </article>
       </section>
+      <Navbar />
     </main>
   );
 }

@@ -12,6 +12,7 @@ import { showError } from "@/app/utils/toast";
 import { BsSearch } from "react-icons/bs";
 import { TbSortAscending, TbSortDescending } from "react-icons/tb";
 import { VscListOrdered } from "react-icons/vsc";
+import Navbar from "../Navbar/Navbar";
 
 export default function TasksList() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -85,7 +86,7 @@ export default function TasksList() {
       <Aside />
       <section className="h-full min-h-screen w-full max-w-screen flex justify-center overflow-hidden bg-b1 text-zinc-200 px-6 py-8">
         <article className="flex flex-col items-center w-full max-w-[1000px]">
-          <header className="w-full flex justify-between items-center mb-6">
+          <header className="w-full max-w-[90vw] flex justify-between items-center mb-6 lg:w-full">
             <div className="flex items-center justify-center gap-2">
               <LiaBalanceScaleSolid className="text-c4 text-5xl mb-1" />
               <h1 className="text-2xl font-bold">Minhas Tarefas</h1>
@@ -98,7 +99,7 @@ export default function TasksList() {
             </Link>
           </header>
 
-          <div className="w-full flex flex-wrap gap-2 mb-6 lg:flex-nowrap">
+          <div className="w-full max-w-[90vw] flex flex-wrap gap-2 mb-6 lg:flex-nowrap lg:w-full">
             <div className="relative w-full">
               <input
                 type="text"
@@ -158,6 +159,7 @@ export default function TasksList() {
           )}
         </article>
       </section>
+      <Navbar />
     </main>
   );
 }

@@ -19,12 +19,12 @@ export default function TaskView(props: ViewTaskProps) {
   const priorityClasses = getPriorityClass(props.task.priority);
   return (
     <>
-      <header className="flex items-center gap-1 mb-8">
+      <header className="flex w-full max-w-[90vw] items-center gap-1 mb-8 lg:w-full">
         <LiaBalanceScaleSolid className="text-c4 text-5xl" />
         <h1 className="text-3xl font-bold">Tarefa</h1>
       </header>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full max-w-[90vw] lg:w-full">
         <div className="flex gap-4 items-center text-xs text-zinc-500 mt-2 justify-start mb-2">
           <div className={priorityClasses.wrapper}>
             <i className={priorityClasses.icon}></i>
