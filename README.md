@@ -8,7 +8,7 @@
 
 <br>
 
-Este documento guia o setup local do projeto **LawerTask API & Web** com NestJS, Prisma ORM, Next.js e Supabase.
+Este documento guia o setup local do projeto **LawerTask Web** com NestJS, Prisma ORM, Next.js e Supabase.
 
 <br>
 
