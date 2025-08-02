@@ -18,12 +18,12 @@ import Navbar from "../Navbar/Navbar";
 
 // ZodSchema, para validação dos dados
 const taskSchema = z.object({
-  title: z.string().min(1, "Título é obrigatório"),
-  description: z.string().min(1, "Descrição é obrigatória"),
+  title: z.string("Título inválido").min(1, "Título é obrigatório"),
+  description: z.string("Descrição inválida").min(1, "Descrição é obrigatória"),
   status: z.enum(["todo", "doing", "done"]),
   priority: z.enum(["low", "medium", "high"]),
-  dueDate: z.string().min(1, "Data de entrega obrigatória"),
-  clientId: z.number().min(1, "Selecionar um cliente é obrigatório"),
+  dueDate: z.string("Data de entrega inválida").min(1, "Data de entrega obrigatória"),
+  clientId: z.number("Selecione um cliente para continuar").min(1, "Selecionar um cliente é obrigatório"),
 });
 
 type TaskFormData = z.infer<typeof taskSchema>;
@@ -166,7 +166,7 @@ export default function TaskForm() {
                 placeholder="Ex: Elaborar Contrato"
                 className="w-full bg-zinc-900 text-white border border-zinc-800 rounded-md px-3 py-2 mt-1"
               />
-              {errors.title && <p className="text-red-500 text-xs">{errors.title.message}</p>}
+              {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
             </div>
 
             <div>
