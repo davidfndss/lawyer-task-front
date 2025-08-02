@@ -16,7 +16,6 @@ Este documento guia o setup local do projeto **LawyerTask Web** com NestJS, Pris
 
 Antes de rodar o projeto, você precisará de:
 
-- [Docker](https://www.docker.com/) (opcional)
 - [Git](https://git-scm.com/downloads)
 - [Node.js](https://nodejs.org/en/download)
 
