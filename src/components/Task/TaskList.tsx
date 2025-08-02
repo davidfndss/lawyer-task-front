@@ -7,6 +7,7 @@ import Link from "next/link";
 import Task from "@/app/interfaces/Task";
 import TaskCard from "@/components/Task/TaskCard";
 import { Aside } from "@/components/Aside/Aside";
+import { Loading } from "../Loading/Loading";
 
 export default function TasksList() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -39,6 +40,14 @@ export default function TasksList() {
     fetchTasks();
   }, [router]);
 
+  if (loading) {
+    return (
+      <div className="flex h-full min-h-screen justify-center items-center w-full bg-b1">
+        <Loading />  
+      </div>
+    );
+  }
+
   return (
     <main className="flex">
       <Aside />
@@ -57,7 +66,6 @@ export default function TasksList() {
             </Link>
           </header>
 
-          {loading && <p className="text-zinc-400">Carregando tarefas...</p>}
           {error && <p className="text-red-400">{error}</p>}
 
           {!loading && !error && tasks.length === 0 && (

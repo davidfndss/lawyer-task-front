@@ -5,13 +5,8 @@ import { showError, showSuccess } from "@/app/utils/toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiChevronUpDown } from "react-icons/hi2";
 import { FiSearch } from "react-icons/fi";
-import { z } from "zod";
 import truncateStringWithEllipsis from "@/app/utils/truncateStringWithElipsis";
-
-const clientSchema = z.object({
-  name: z.string().min(1, "Nome é obrigatório"),
-  email: z.string().email("E-mail inválido"),
-});
+import { clientSchema } from "@/app/clients/new/page";
 
 interface ClientSelectorProps {
   value: number;

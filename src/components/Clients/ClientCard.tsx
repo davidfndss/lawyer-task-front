@@ -7,6 +7,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import { showError, showSuccess } from "@/app/utils/toast";
 import { useRouter } from "next/navigation";
+import { formatToDayMonthYear } from "@/app/utils/formatDate";
 
 interface Props extends Client {
   onDelete?: (id: string) => void;
@@ -47,29 +48,23 @@ export default function ClientCard(props: Props) {
     >
       <div className="p-2 rounded-t-lg flex justify-between items-center bg-zinc-900 mr-1">
         <span className="text-zinc-500">CLIENTE</span>
-        <button>
-          <i className="bi bi-circle-fill text-zinc-800"></i>
+        <button onClick={handleDelete}>
+          <i className="bi bi-x-circle-fill text-2xl text-c2 opacity-30 transition hover:opacity-100 hover:text-c3"></i>
         </button>
       </div>
-      <div className="p-2 rounded-b-lg bg-zinc-950 overflow-hidden">
+      <div className="pt-2 px-2 rounded-b-lg bg-zinc-950 overflow-hidden">
         <div className="text-white rounded flex flex-col gap-1 py-1 mb-2">
           <div className="flex items-center gap-4 text-lg py-1">
             <FaUserCircle className="text-3xl text-c2" />
             <span>{truncateStringWithEllipsis(props.name, 60)}</span>
           </div>
-          <div className="flex justify-between items-center gap-4 text-lg py-1">
+          <div className="gap-4 text-lg py-1">
             <div className="flex gap-4">
               <MdOutlineMail className="text-3xl text-c2" />
-              <span>{props.email}</span>
+              <p className="break-words">{props.email}</p>
             </div>
-            <button
-              onClick={handleDelete}
-              className="bg-zinc-800 transition opacity-30 hover:opacity-100 hover:bg-c3 px-2 py-2 rounded-full"
-              title="Excluir cliente"
-            >
-              <BsFillTrashFill className="text-2xl text-zinc-200" />
-            </button>
           </div>
+          <p className="text-zinc-800 text-xs">Adicionado desde {formatToDayMonthYear(props.createdAt!)}</p>
         </div>
       </div>
     </div>

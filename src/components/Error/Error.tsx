@@ -1,7 +1,6 @@
 import RedirectButton from "../Button/RedirectButton";
-
 interface ErrorProps {
-    errorMessage: string;
+    errorMessage?: string;
     button?: boolean;
     buttonInnerText?: string;
     buttonRedirectRoute?: string;

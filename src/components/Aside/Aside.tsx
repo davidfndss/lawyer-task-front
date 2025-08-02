@@ -27,7 +27,7 @@ function Aside() {
                   <IoGridOutline />
                 </span>
 
-                <nav>Página inicial</nav>
+                <nav>Dashboard</nav>
               </nav>
 
               <nav className="text-zinc-500 font-[500] flex items-center gap-2 cursor-pointer transition py-2 px-2 -sm hover:text-c4 hover:bg-b2" onClick={() => router.push("/tasks")}>
